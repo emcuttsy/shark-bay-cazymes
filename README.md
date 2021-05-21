@@ -1,4 +1,4 @@
-shark-bay-CAZymes
+shark-bay-cazymes
 ==============================
 
 Analysis of CAZyme distribution 84 metagenome-assembled genomes from a Shark Bay pustular mat
