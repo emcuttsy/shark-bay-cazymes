@@ -1,3 +1,5 @@
+import pandas as pd
+
 def get_mag_dbcan_overview(mag_dir):
     # locate the overview file in the dbCAN results for a MAG
     overview_file = mag_dir / 'overview.txt'
