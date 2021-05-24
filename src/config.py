@@ -3,4 +3,8 @@
 
 from pathlib import Path
 
-data_dir = Path('../data')
+# data directories
+data_dir = Path('~/shark-bay-cazymes/data')
+
+dbcan_dir = data_dir / 'raw' / 'dbCAN'
+signalp_dir = data_dir / 'signalp'
