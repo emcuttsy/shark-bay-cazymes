@@ -47,3 +47,6 @@ The raw data for this project is the output of two annotation programs: dbCAN an
 One step of this project was manual annotation of data tables created from the raw data. In this workflow, data in `raw` is used to create sets of data tables stored in `interim`. These interim data tables were then manually annotated before a final processing step resulting in the finished dataset stored in `processed`. 
 
 To create the interim data used for manual annotation, `cd` to the root directory and run `make interim_data`. To create the final dataset, run `make processed_data`. 
+
+## The `src` package
+I use a small package called `src` to store scripts and attributes used throughout the analysis. Make sure that you install `src` before trying to run anything - this can be done using `pip install .` If you make any changes to src (for instance, to the `config.py` file), you should re-install it. Once installed, it acts like any other Python package and can be imported using `import src` or `import src.subpackage` where `subpackage` is `data` or another subpackage (directory). Subpackages need to be imported individually.
