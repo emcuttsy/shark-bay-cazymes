@@ -1,5 +1,5 @@
 # config.py
 from pathlib import Path
 
-root_dir = Path('/home/elise/shark-bay-cazymes')
-data_dir = root_dir / 'data'
+project_dir = Path('/home/ecutts/shark-bay-cazymes')
+data_dir = project_dir / 'data'
