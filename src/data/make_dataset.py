@@ -25,9 +25,7 @@ def main():
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         overview = helpers.get_mag_dbcan_overview(i)
-        overviews[i] = helpers.remove_HMMer_bounds(overview)
-        overviews[i] = overview[overview['#ofTools'] > 1] # remove entries with less than 2 tools reporting.
-    print(overviews[2808607017])
+        print(overview.head)
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
