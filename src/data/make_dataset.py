@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-import click
+#import click
 import logging
 from pathlib import Path
-import pandas as pd
+#import pandas as pd
 import src.config as config
-from dotenv import find_dotenv, load_dotenv
+import os
+#from dotenv import find_dotenv, load_dotenv
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+#@click.command()
+#@click.argument('input_filepath', type=click.Path(exists=True))
+#@click.argument('output_filepath', type=click.Path())
+#def main(input_filepath, output_filepath):
+def main():
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -20,9 +22,8 @@ def main(input_filepath, output_filepath):
 
     # get the overview dataframes of dbCAN results for each MAG
     overviews = {}
-    for d in os.listdir(config.dbcan_dir):
-        print(d)
-
+    for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
+        print(i)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -33,11 +34,13 @@ if __name__ == '__main__':
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
+    #load_dotenv(find_dotenv())
 
     main()
 
-
+######################################################################################
+# Functions used in data processing
+######################################################################################
 
 def get_mag_dbcan_overview(mag_dir):
     # locate the overview file in the dbCAN results for a MAG
