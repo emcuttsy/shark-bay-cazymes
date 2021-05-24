@@ -25,6 +25,7 @@ def main():
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         try:
             overview = get_mag_dbcan_overview(i)
+            print('success!')
         except:
             print(i)
 
@@ -51,6 +52,7 @@ if __name__ == '__main__':
 def get_mag_dbcan_overview(mag_dir):
     # locate the overview file in the dbCAN results for a MAG
     overview_file = mag_dir / 'overview.txt'
+    print(overview_file)
     overview = pd.read_table(overview_file)
     return overview
 
