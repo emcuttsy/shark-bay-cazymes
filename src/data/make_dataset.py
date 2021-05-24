@@ -23,7 +23,13 @@ def main():
     # get the overview dataframes of dbCAN results for each MAG
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
-        print(i)
+        try:
+            overview = get_mag_dbcan_overview(i)
+        except:
+            print(i)
+
+        overviews[i] = remove_HMMer_bounds(overview)
+        overviews[i] = overview[overview['#ofTools'] > 1] # remove entries with less than 2 tools reporting.
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
