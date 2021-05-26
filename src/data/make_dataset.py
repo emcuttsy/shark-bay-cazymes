@@ -25,8 +25,8 @@ def main():
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         overview = helpers.get_mag_dbcan_overview(i)
-        overviews[d] = remove_HMMER_bounds(overview)
-        overviews[d] = overview[overview['#ofTools'] > 1]
+        overviews[i] = helpers.remove_HMMER_bounds(overview)
+        overviews[i] = overview[overview['#ofTools'] > 1]
     
     dbcan_families = {}
     assemblies = {}
@@ -51,6 +51,7 @@ if __name__ == '__main__':
 
     # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
+    signalp = pd.read_table(Path(config.data_dir / 'raw' / 'signalp' / 'output_protein_type.txt'), skiprows=1)
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
