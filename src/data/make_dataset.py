@@ -25,7 +25,7 @@ def main():
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         overview = helpers.get_mag_dbcan_overview(i)
-        overviews[i] = helpers.remove_HMMER_bounds(overview)
+        overviews[i] = helpers.remove_HMMer_bounds(overview)
         overviews[i] = overview[overview['#ofTools'] > 1]
     
     dbcan_families = {}
