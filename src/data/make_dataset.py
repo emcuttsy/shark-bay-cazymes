@@ -21,6 +21,10 @@ def main():
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+    ####################################################################
+    # Make dbcAN_signalp_summary.tsv table
+    ####################################################################
+    
     # get the overview dataframes of dbCAN results for each MAG
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
@@ -30,6 +34,7 @@ def main():
         overviews[idd] = helpers.remove_HMMer_bounds(overview)
         overviews[idd] = overview[overview['#ofTools'] > 1]
     
+    # assign CAZyme families based on dbCAN data and store signalp annos
     dbcan_families = {}
     assemblies = {}
     signalp_annos = {}
@@ -45,7 +50,8 @@ def main():
     # create dataframe with gene ID, taxon id, dbCAN anno, and singlP anno
     gene_df = pd.DataFrame({'dbCAN': dbcan_families, 'signalp': signalp_annos,
                             'assembly':assemblies}, index=dbcan_families.keys())
-    print(gene_df.head())
+                            
+    gene_df.to_csv(Path(config.data_dir / 'processed' / 'dbCAN_signalp_summary.tsv'))
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
