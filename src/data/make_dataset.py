@@ -2,7 +2,7 @@
 #import click
 import logging
 from pathlib import Path
-#import pandas as pd
+import pandas as pd
 import src.config as config
 import make_dataset_helpers as helpers
 import os
@@ -25,7 +25,26 @@ def main():
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         overview = helpers.get_mag_dbcan_overview(i)
-        print(overview.head)
+        overviews[d] = remove_HMMER_bounds(overview)
+        overviews[d] = overview[overview['#ofTools'] > 1]
+    
+    dbcan_families = {}
+    assemblies = {}
+    signalp_annos = {}
+    for key in overviews.keys():
+        df = overviews[key]
+        for index, row in df.iterrows():
+            families = decide_families(row)
+            if families:
+                dbcan_families[row['Gene ID']] = ','.join(families)
+                assemblies[row['Gene ID']] = key
+                signalp_annos[row['Gene ID']] = signalp[signalp['# ID'] == row['Gene ID']]['Prediction'].tolist()[0]            
+    
+    # create dataframe with gene ID, taxon id, dbCAN anno, and singlP anno
+    gene_df = pd.DataFrame({'dbCAN': dbcan_families, 'signalp': signalp_annos,
+                            'assembly':assemblies}, index=dbcan_families.keys())
+    print(gene_df.head())
+
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
