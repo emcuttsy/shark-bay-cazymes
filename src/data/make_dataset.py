@@ -34,7 +34,7 @@ def main():
     for key in overviews.keys():
         df = overviews[key]
         for index, row in df.iterrows():
-            families = decide_families(row)
+            families = helpers.decide_families(row)
             if families:
                 dbcan_families[row['Gene ID']] = ','.join(families)
                 assemblies[row['Gene ID']] = key
