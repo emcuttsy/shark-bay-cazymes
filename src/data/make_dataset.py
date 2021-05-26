@@ -24,9 +24,11 @@ def main():
     # get the overview dataframes of dbCAN results for each MAG
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
+        idd = i.stem.split('.txt')[0]
+        print(idd)
         overview = helpers.get_mag_dbcan_overview(i)
-        overviews[i] = helpers.remove_HMMer_bounds(overview)
-        overviews[i] = overview[overview['#ofTools'] > 1]
+        overviews[idd] = helpers.remove_HMMer_bounds(overview)
+        overviews[idd] = overview[overview['#ofTools'] > 1]
     
     dbcan_families = {}
     assemblies = {}
