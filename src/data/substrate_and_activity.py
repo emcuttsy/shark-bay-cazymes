@@ -22,7 +22,7 @@ def make():
     ##############
 
     EC_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'activities.tsv')
-    sub_df = pd.read_table(data_dir / 'raw ' / 'final_manual_annos' / 'substrates.tsv')
+    sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
     familes_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv')
     families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv')
     
