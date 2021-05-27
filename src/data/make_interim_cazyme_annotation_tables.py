@@ -5,7 +5,7 @@ import substrate_and_activity_helpers as helpers
 
 def make():
     
-    CAZy_table = pd.read_table('../data/raw/CAZyDB.07302020.fam-activities.txt', skiprows=1, names=['family', 'activity'])
+    CAZy_table = pd.read_table(data_dir / 'raw' / 'CAZyDB.07302020.fam-activities.txt', skiprows=1, names=['family', 'activity'])
     
     finds = []
     ECs = []
