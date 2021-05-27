@@ -114,10 +114,9 @@ def main():
     # Make summary table
     ####################################################################
 
-    # make summary table with gene and family counts (excreted and not), and percent excreted
-    helpers.make_summary_table(gene_df, families_df, excreted_df, counts)
-
-    summary_df.to_csv(output_summary)
+    # make summary table with gene and family counts (excreted and not)
+    summary_df = helpers.make_summary_table(gene_df, families_df, excreted_df, counts)
+    summary_df.to_csv(config.data_dir / 'processed' / 'dbCAN_signalp_summary.tsv', sep = '\t')
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
