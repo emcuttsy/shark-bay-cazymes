@@ -21,6 +21,7 @@ def make():
 
     ##############
 
+    cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_family_activities.tsv', sep='\t')
     EC_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'activities.tsv')
     sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
     familes_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv')
@@ -28,7 +29,7 @@ def make():
     
 
     # map substrates and activity to CAZymes
-    cazyfam_df = helpers.map_substrates_and_activity(CAZy_table, sub_df, EC_df)
+    cazyfam_df = helpers.map_substrates_and_activity(cazyfam_df, sub_df, EC_df)
 
     # add information from a column in carbo_df to a dataframe based on its substrates column.
     cazyfam_df = helpers.add_substrate_metadata_cols(cazyfam_df, sub_df)
