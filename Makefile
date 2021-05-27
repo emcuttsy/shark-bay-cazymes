@@ -23,7 +23,7 @@ test:
 	$(PYTHON_INTERPRETER) hello_world.py
 
 ## Make Dataset
-data:
+data
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 
