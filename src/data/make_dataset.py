@@ -75,6 +75,39 @@ def main():
             SeqIO.write(to_write, ofile, 'fasta')
     os.system("awk 1 data/processed/dbCAN_signalp_genes/*.faa > data/processed/dbCAN_signalp_genes.faa")
     
+    ####################################################################
+    # Make fasta file of all annotated CAZymes
+    ####################################################################
+
+
+    # make table of family tallies 
+    families_d = dict.fromkeys(set(gene_df['assembly']))
+    excreted_d = dict.fromkeys(set(gene_df['assembly']))
+    excreted_ids = gene_df[gene_df['signalp'] != 'OTHER'].index
+    gene_families = set(sum(gene_df['dbCAN'].str.split(',').tolist(),[]))
+
+    for index, row in gene_df.iterrows():
+        
+        if not families_d[row['assembly']]:
+            families_d[row['assembly']] = dict.fromkeys(gene_families, 0)
+        if not excreted_d[row['assembly']]:
+            excreted_d[row['assembly']] = dict.fromkeys(gene_families, 0)
+        d = families_d[row['assembly']]
+        e_d = excreted_d[row['assembly']]
+        dbCAN_anno = row['dbCAN'].split(',')
+        
+        for anno in dbCAN_anno:
+            d[anno] += 1
+            if index in excreted_ids:
+                e_d[anno] += 1
+        
+    families_df = pd.DataFrame.from_dict(families_d,orient='index')
+    families_df = families_df.sort_index(axis=1)
+    families_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG.tsv', sep='/t')
+
+    excreted_df = pd.DataFrame.from_dict(excreted_d, orient='index')
+    excreted_df = excreted_df.sort_index(axis=1)
+    excreted_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG_excreted.tsv', sep='/t')
 
 
 if __name__ == '__main__':
