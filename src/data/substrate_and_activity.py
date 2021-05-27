@@ -43,5 +43,5 @@ def make():
     cazyfam_df['count'] = cazyfam_df['family'].apply(get_count_from_fam, args=(familes_df,))
     cazyfam_df['ex_count'] = cazyfam_df['family'].apply(get_count_from_fam, args=(families_ex_df,))
 
-    cazyfam_df.to_csv('data-tables/CAZy_fams_autoannos.txt')
-    cazyfam_df[cazyfam_df['count'] > 0].to_csv('data-tables/CAZy_families_autoannos.txt')
+    cazyfam_df.to_csv(data_dir / 'interim' / 'CAZy_fams_autoannos_all.tsv', sep='\t')
+    cazyfam_df[cazyfam_df['count'] > 0].to_csv(data_dir / 'interim' / 'CAZy_fams_autoannos_MAGs.tsv', sep='\t')
