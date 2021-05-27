@@ -32,6 +32,10 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+## Delete all output files
+clear_output:
+	rm -r data/processed
+	mkdir data/processed
 
 ## Set up python interpreter environment
 create_environment:
