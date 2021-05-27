@@ -38,8 +38,7 @@ clear_output:
 	mkdir data/processed
 	rm -r data/interim
 	mkdir data/interim
-
-
+	
 ## Set up python interpreter environment
 create_environment:
 ifeq (True,$(HAS_CONDA))
