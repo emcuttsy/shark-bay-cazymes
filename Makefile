@@ -36,6 +36,9 @@ clean:
 clear_output:
 	rm -r data/processed
 	mkdir data/processed
+	rm -r data/interim
+	mkdir data/interim
+
 
 ## Set up python interpreter environment
 create_environment:
