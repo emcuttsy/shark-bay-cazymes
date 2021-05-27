@@ -181,7 +181,6 @@ def map_substrates_and_activity(cazyfam_df, carbo_df, EC_df):
     activities_list = []
 
     for index, row in cazyfam_df.iterrows():
-        print(row)
         substrates, activities = get_substrates_and_activities_from_ECs(row['ECs'], EC_df)
         substrates_list.append(substrates)
         activities_list.append(activities)

@@ -21,11 +21,11 @@ def make():
 
     ##############
 
-    cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_family_activities.tsv', sep='\t')
+    cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_family_activities.tsv', sep='\t') #reimport introduces NaNs, which are needed.
     EC_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'activities.tsv')
     sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
-    familes_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv')
-    families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv')
+    familes_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
+    families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
     
 
     # map substrates and activity to CAZymes
