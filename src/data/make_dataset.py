@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 import src.config as config
 import make_dataset_helpers as helpers
+from Bio import SeqIO
 import os
 #from dotenv import find_dotenv, load_dotenv
 
@@ -29,7 +30,6 @@ def main():
     overviews = {}
     for i in Path(config.data_dir / 'raw' / 'dbCAN').iterdir():
         idd = i.stem.split('.txt')[0]
-        print(idd)
         overview = helpers.get_mag_dbcan_overview(i)
         overviews[idd] = helpers.remove_HMMer_bounds(overview)
         overviews[idd] = overview[overview['#ofTools'] > 1]
@@ -50,8 +50,30 @@ def main():
     # create dataframe with gene ID, taxon id, dbCAN anno, and singlP anno
     gene_df = pd.DataFrame({'dbCAN': dbcan_families, 'signalp': signalp_annos,
                             'assembly':assemblies}, index=dbcan_families.keys())
-                            
+
     gene_df.to_csv(Path(config.data_dir / 'processed' / 'dbCAN_signalp_summary.tsv'))
+
+
+    ####################################################################
+    # Make fasta file of all annotated CAZymes
+    ####################################################################
+
+    # make combined fasta file and get gene counts
+    counts = dict.fromkeys(gene_df['assembly'], 0)
+
+    for genome in overviews.keys():
+        count = 0
+        to_write = []
+        fasta = config.data_dir / 'raw' / 'fastas' / genome + '.genes.faa'
+        with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_all_genes.faa'), 'w') as ofile:
+            for record in SeqIO.parse(ifile, 'fasta'):
+                if int(record.id) in gene_df.index:
+                    counts[genome] += 1
+                    record.description = record.description + ' |' + genome + '|'+\
+                    gene_df.loc[int(record.id)]['dbCAN'] +'|'+ gene_df.loc[int(record.id)]['signalp']
+                    to_write.append(record)
+            SeqIO.write(to_write, ofile, 'fasta')
+
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
