@@ -103,11 +103,11 @@ def main():
         
     families_df = pd.DataFrame.from_dict(families_d,orient='index')
     families_df = families_df.sort_index(axis=1)
-    families_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG.tsv', sep='/t')
+    families_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG.tsv', sep='\t')
 
     excreted_df = pd.DataFrame.from_dict(excreted_d, orient='index')
     excreted_df = excreted_df.sort_index(axis=1)
-    excreted_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG_excreted.tsv', sep='/t')
+    excreted_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG_excreted.tsv', sep='\t')
 
 
 if __name__ == '__main__':
