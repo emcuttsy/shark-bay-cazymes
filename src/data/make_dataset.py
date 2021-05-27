@@ -75,10 +75,10 @@ def main():
             SeqIO.write(to_write, ofile, 'fasta')
     os.system("awk 1 data/processed/dbCAN_signalp_genes/*.faa > data/processed/dbCAN_signalp_genes.faa")
     
-    ####################################################################
-    # Make fasta file of all annotated CAZymes
-    ####################################################################
 
+    ####################################################################
+    # Make table of counts in MAG vs family
+    ####################################################################
 
     # make table of family tallies 
     families_d = dict.fromkeys(set(gene_df['assembly']))
@@ -103,12 +103,21 @@ def main():
         
     families_df = pd.DataFrame.from_dict(families_d,orient='index')
     families_df = families_df.sort_index(axis=1)
-    families_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG.tsv', sep='\t')
+    families_df.to_csv(config.data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', sep='\t')
 
     excreted_df = pd.DataFrame.from_dict(excreted_d, orient='index')
     excreted_df = excreted_df.sort_index(axis=1)
-    excreted_df.to_csv(config.data_dir / 'processed' / 'CAZyme_fam_counts_by_MAG_excreted.tsv', sep='\t')
+    excreted_df.to_csv(config.data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', sep='\t')
 
+    
+    ####################################################################
+    # Make summary table
+    ####################################################################
+
+    # make summary table with gene and family counts (excreted and not), and percent excreted
+    helpers.make_summary_table(gene_df, families_df, excreted_df, counts)
+
+    summary_df.to_csv(output_summary)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
