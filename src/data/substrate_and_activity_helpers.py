@@ -48,6 +48,7 @@ def get_substrates_and_activities_from_ECs(ECs, EC_df):
     if not pd.isna(ECs):
         ECs = ECs.split('; ')
         for EC in ECs:
+            print(EC)
             EC_substrates = EC_df.loc[EC_df['EC'] == EC]['substrates'].values[0]
             EC_activities = EC_df.loc[EC_df['EC'] == EC]['activity'].values[0]
             if not pd.isna(EC_substrates):
