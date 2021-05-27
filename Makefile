@@ -24,8 +24,8 @@ test:
 
 ## Make Dataset
 data:
-	mkdir data/processed/dbCAN_signalp_genes
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+
 
 ## Delete all compiled Python files
 clean:

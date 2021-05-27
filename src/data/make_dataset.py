@@ -58,13 +58,14 @@ def main():
     # Make fasta file of all annotated CAZymes
     ####################################################################
 
-    # make combined fasta file and get gene counts
+    # make fasta files and get gene counts
     counts = dict.fromkeys(gene_df['assembly'], 0)
+    os.system("mkdir data/processed/dbCAN_signalp_genes")
 
     for genome in overviews.keys():
         to_write = []
         fasta = config.data_dir / 'raw' / 'fastas' / str(genome + '.genes.faa')
-        with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_genes' / str('dbCAN_signalp_' + genome + 'genes.faa')), 'w') as ofile:
+        with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_genes' / str('dbCAN_signalp_' + genome + '_genes.faa')), 'w') as ofile:
             for record in SeqIO.parse(ifile, 'fasta'):
                 if int(record.id) in gene_df.index:
                     counts[genome] += 1
@@ -72,6 +73,8 @@ def main():
                     gene_df.loc[int(record.id)]['dbCAN'] +'|'+ gene_df.loc[int(record.id)]['signalp']
                     to_write.append(record)
             SeqIO.write(to_write, ofile, 'fasta')
+    os.system("awk 1 data/processed/dbCAN_signalp_genes/*.faa > data/processed/dbCAN_signalp_genes.faa")
+    
 
 
 if __name__ == '__main__':
