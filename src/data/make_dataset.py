@@ -65,7 +65,7 @@ def main():
         print(genome)
         count = 0
         to_write = []
-        fasta = config.data_dir / 'raw' / 'fastas' / genome + '.genes.faa'
+        fasta = config.data_dir / 'raw' / 'fastas' / str(genome + '.genes.faa')
         with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_all_genes.faa'), 'w') as ofile:
             for record in SeqIO.parse(ifile, 'fasta'):
                 if int(record.id) in gene_df.index:
