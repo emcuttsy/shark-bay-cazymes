@@ -62,6 +62,7 @@ def main():
     counts = dict.fromkeys(gene_df['assembly'], 0)
 
     for genome in overviews.keys():
+        print(genome)
         count = 0
         to_write = []
         fasta = config.data_dir / 'raw' / 'fastas' / genome + '.genes.faa'
