@@ -64,7 +64,7 @@ def main():
     for genome in overviews.keys():
         to_write = []
         fasta = config.data_dir / 'raw' / 'fastas' / str(genome + '.genes.faa')
-        with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_fastas' / str('dbCAN_signalp_' + genome + 'genes.faa')), 'w') as ofile:
+        with open(fasta, 'r') as ifile, open(Path(config.data_dir / 'processed' / 'dbCAN_signalp_genes' / str('dbCAN_signalp_' + genome + 'genes.faa')), 'w') as ofile:
             for record in SeqIO.parse(ifile, 'fasta'):
                 if int(record.id) in gene_df.index:
                     counts[genome] += 1
