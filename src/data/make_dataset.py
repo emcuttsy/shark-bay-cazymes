@@ -121,16 +121,19 @@ def main():
     summary_df.to_csv(config.data_dir / 'processed' / 'dbCAN_signalp_counts.tsv', sep = '\t')
 
     ####################################################################
-    # Make auto-annotated CAZyme summary table
+    # Make CAZyme summary tables
+    # Interim tables are created automatically
+    # Final version of CAZyme_table.tsv is based on manually annotated versions
     ####################################################################
 
-    make_cazyme_tables.make()
+    make_cazyme_tables.make() # make interim auto-annotated CAZyme summary table.
 
-    ####################################################################
-    # Make substrate and bond dataframes for additional annotation
-    ####################################################################
+    make_cazyme_tables.reimport_and_update_cazyme_table() # reimport manually annotated tables and updates cazyme table
 
     make_bond_and_substrate_tables.make() # makes the empty tables in interim used for manual annotation
+    
+    make_bond_and_substrate_tables.reimport_and_update_cazyme_table() # imports manually annotated tables and updates cazyme table
+    # the cazyme table under data/processed/CAZyme_table.tsv is now complete!
 
 
 if __name__ == '__main__':
