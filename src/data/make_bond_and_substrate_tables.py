@@ -3,12 +3,13 @@ import make_cazyme_tables_helpers as helpers
 from src.config import data_dir
 import collections
 
+cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_no_categories.tsv', index_col = 0)
+sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
+families_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
+families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
+
 def make():
-    cazyfam_df = pd.read_table(data_dir / 'processed' / 'CAZyme_table.tsv', index_col = 0)
-    sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
-    families_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
-    families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
-    
+
     ghpl_df = cazyfam_df[(cazyfam_df['family'].str.contains('GH') | cazyfam_df['family'].str.contains('PL'))]
     substrates = collections.Counter(helpers.get_list_from_col(ghpl_df, 'substrates', count_col='count'))
     ex_substrates = collections.Counter(helpers.get_list_from_col(ghpl_df, 'substrates', count_col='ex_count'))
@@ -44,7 +45,7 @@ def make():
     sb_substrates['superfamily'] = pd.Series(sb_substrates.index).apply(helpers.get_substrate_info, args=('superfamily',sub_df,)).tolist()
     sb_substrates['family'] = pd.Series(sb_substrates.index).apply(helpers.get_substrate_info, args=('family',sub_df,)).tolist()
     sb_substrates['subfamily'] = pd.Series(sb_substrates.index).apply(helpers.get_substrate_info, args=('subfamily',sub_df,)).tolist()
-    sb_substrates.to_csv( data_dir / 'interim' / 'substrates_MAGs.tsv', sep='\t')
+    sb_substrates.to_csv( data_dir / 'interim' / 'substrates_inMAGs.tsv', sep='\t')
 
 
 
@@ -77,4 +78,16 @@ def make():
         ex_count.append(ex_rows_with_bond['ex_count'].sum())
 
     sb_bonds_df = pd.DataFrame({'count': count, 'ex_count': ex_count, 'mags': mags, 'ex_mags': ex_mags}, index=sb_bonds)
-    sb_bonds_df.to_csv(data_dir / 'interim' / 'bond_targets_MAGs.tsv', sep='\t')
+    sb_bonds_df.to_csv(data_dir / 'interim' / 'bond_targets_inMAGs.tsv', sep='\t')
+
+
+def reimport_and_update_cazyme_table():
+    sb_bonds_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates_inMAGs_categories.tsv')
+    sb_subs_df = pd.read_table(data_dir / 'raw' / 'bond_targets_inMAGs_categories.tsv')
+
+    cazyfam_df['substrate cat1'] = cazyfam_df['substrates'].apply(helpers.get_categories_from_activity_string, args=('cat1',sb_subs_df, ), return_strlist=True)
+    cazyfam_df['substrate cat2'] = cazyfam_df['substrates'].apply(helpers.get_categories_from_activity_string, args=('cat2',sb_subs_df, ), return_strlist=True)
+    cazyfam_df['activity cat1'] = cazyfam_df['bond activity'].apply(helpers.get_categories_from_activity_string, args=('cat1',sb_bonds_df, ), return_strlist=True)
+    cazyfam_df['activity cat2'] = cazyfam_df['bond activity'].apply(helpers.get_categories_from_activity_string, args=('cat2',sb_bonds_df, ), return_strlist=True)
+
+    cazyfam_df.to_csv(data_dir , sep='\t')

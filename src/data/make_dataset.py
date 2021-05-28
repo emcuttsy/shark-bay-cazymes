@@ -130,7 +130,8 @@ def main():
     # Make substrate and bond dataframes for additional annotation
     ####################################################################
 
-    make_bond_and_substrate_tables.make()
+    make_bond_and_substrate_tables.make() # makes the empty tables in interim used for manual annotation
+
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
