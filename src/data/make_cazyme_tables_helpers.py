@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 from src.config import data_dir
-import substrate_and_activity_helpers as helpers
+import make_cazyme_tables_helpers as helpers
 
 def make():
     
