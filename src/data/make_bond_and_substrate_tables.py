@@ -87,7 +87,7 @@ def reimport_and_update_cazyme_table():
     cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
 
     sb_bonds_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates_inMAGs_categories.tsv')
-    sb_subs_df = pd.read_table(data_dir / 'raw' / 'finial_manual_annos' / 'bond_targets_inMAGs_categories.tsv')
+    sb_subs_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'bond_targets_inMAGs_categories.tsv')
 
     cazyfam_df['substrate cat1'] = cazyfam_df['substrates'].apply(helpers.get_categories_from_activity_string, args=('cat1',sb_subs_df, ), return_strlist=True)
     cazyfam_df['substrate cat2'] = cazyfam_df['substrates'].apply(helpers.get_categories_from_activity_string, args=('cat2',sb_subs_df, ), return_strlist=True)
