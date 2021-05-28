@@ -3,12 +3,13 @@ import make_cazyme_tables_helpers as helpers
 from src.config import data_dir
 import collections
 
-cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
-sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
-families_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
-families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
-
 def make():
+
+    cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
+    sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
+    families_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
+    families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
+
 
     ghpl_df = cazyfam_df[(cazyfam_df['family'].str.contains('GH') | cazyfam_df['family'].str.contains('PL'))]
     substrates = collections.Counter(helpers.get_list_from_col(ghpl_df, 'substrates', count_col='count'))
@@ -82,6 +83,9 @@ def make():
 
 
 def reimport_and_update_cazyme_table():
+    
+    cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
+    
     sb_bonds_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates_inMAGs_categories.tsv')
     sb_subs_df = pd.read_table(data_dir / 'raw' / 'bond_targets_inMAGs_categories.tsv')
 
