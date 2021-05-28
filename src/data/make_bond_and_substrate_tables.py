@@ -3,7 +3,7 @@ import make_cazyme_tables_helpers as helpers
 from src.config import data_dir
 import collections
 
-cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_no_categories.tsv', index_col = 0)
+cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
 sub_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates.tsv')
 families_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG.tsv', index_col = 0)
 families_ex_df = pd.read_table(data_dir / 'processed' / 'CAZyme_ct_vs_MAG_ex.tsv', index_col = 0)
