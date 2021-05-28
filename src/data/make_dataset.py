@@ -130,6 +130,8 @@ def main():
     # Make substrate and bond dataframes for additional annotation
     ####################################################################
 
+    make_bond_and_substrate_tables.make()
+
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
