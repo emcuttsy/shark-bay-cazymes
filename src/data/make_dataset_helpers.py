@@ -57,6 +57,7 @@ def get_family_counts(overview_df, genome):
                     fam_counts[fam] += 1
     return fam_counts
 
+
 def make_summary_table(gene_df, families_df, excreted_df, counts):
 
     # make summary table with gene and family counts (excreted and not), and percent excreted
