@@ -46,10 +46,10 @@ def make():
     cazyfam_df = cazyfam_df.iloc[: , 1:]
 
     cazyfam_df.to_csv(data_dir / 'interim' / 'CAZy_fams_autoannos_all.tsv', sep='\t')
-    cazyfam_df[cazyfam_df['count'] > 0].to_csv(data_dir / 'interim' / 'CAZy_fams_autoannos_MAGs.tsv', sep='\t')
+    cazyfam_df[cazyfam_df['count'] > 0].to_csv(data_dir / 'interim' / 'CAZyme_fams_autoannos_MAGs.tsv', sep='\t')
 
     # make final tables based on manually refined file
-    cazyfam_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'CAZy_fams_refined_MAGs.tsv')
+    cazyfam_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'CAZyme_fams_refined_MAGs.tsv')
     cazyfam_df = helpers.add_substrate_metadata_cols(cazyfam_df, sub_df)
     combined_cazyfam_df = helpers.make_combined_cazyfam_df(cazyfam_df, families_df, families_ex_df)
     combined_cazyfam_df.to_csv(data_dir / 'processed' / 'CAZyme_table.tsv', sep='\t')
