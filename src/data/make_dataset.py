@@ -5,7 +5,8 @@ from pathlib import Path
 import pandas as pd
 import src.config as config
 import make_dataset_helpers as helpers
-import substrate_and_activity
+import make_cazyme_tables
+import make_bond_and_substrate_tables
 from Bio import SeqIO
 import os
 #from dotenv import find_dotenv, load_dotenv
@@ -123,7 +124,11 @@ def main():
     # Make auto-annotated CAZyme summary table
     ####################################################################
 
-    substrate_and_activity.make()
+    make_cazyme_tables.make()
+
+    ####################################################################
+    # Make substrate and bond dataframes for additional annotation
+    ####################################################################
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
