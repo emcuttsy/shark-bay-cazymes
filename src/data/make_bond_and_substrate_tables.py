@@ -85,7 +85,7 @@ def make():
 def reimport_and_update_cazyme_table():
     
     cazyfam_df = pd.read_table(data_dir / 'interim' / 'CAZyme_table_interim.tsv', index_col = 0)
-    
+
     sb_bonds_df = pd.read_table(data_dir / 'raw' / 'final_manual_annos' / 'substrates_inMAGs_categories.tsv')
     sb_subs_df = pd.read_table(data_dir / 'raw' / 'bond_targets_inMAGs_categories.tsv')
 
@@ -94,4 +94,4 @@ def reimport_and_update_cazyme_table():
     cazyfam_df['activity cat1'] = cazyfam_df['bond activity'].apply(helpers.get_categories_from_activity_string, args=('cat1',sb_bonds_df, ), return_strlist=True)
     cazyfam_df['activity cat2'] = cazyfam_df['bond activity'].apply(helpers.get_categories_from_activity_string, args=('cat2',sb_bonds_df, ), return_strlist=True)
 
-    cazyfam_df.to_csv(data_dir , sep='\t')
+    cazyfam_df.to_csv(data_dir / 'processed' / 'CAZyme_table.tsv', sep='\t')
