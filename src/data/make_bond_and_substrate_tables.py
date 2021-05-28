@@ -34,7 +34,7 @@ def make():
         for i in families:
             if i in families_df.columns:
                 magids += list(families_df[families_df[i] != 0].index)
-            if i in cazyme_ex_df.columns:
+            if i in families_ex_df.columns:
                 ex_magids += list(families_ex_df[families_ex_df[i] != 0].index)
         mags.append(len(set(magids)))
         ex_mags.append(len(set(ex_magids)))
