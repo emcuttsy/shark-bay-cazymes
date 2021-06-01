@@ -7,6 +7,7 @@ import src.config as config
 import make_dataset_helpers as helpers
 import make_cazyme_tables
 import make_bond_and_substrate_tables
+import polish_metadata_table
 from Bio import SeqIO
 import os
 #from dotenv import find_dotenv, load_dotenv
@@ -134,6 +135,13 @@ def main():
     
     make_bond_and_substrate_tables.reimport_and_update_cazyme_table() # imports manually annotated tables and updates cazyme table
     # the cazyme table under data/processed/CAZyme_table.tsv is now complete!
+
+    ####################################################################
+    # Polish the metadata table for use in analysis
+    # Change names, reorder according to combo of phylogeny and alpha
+    ####################################################################
+
+    polish_metadata_table.run()
 
 
 if __name__ == '__main__':
