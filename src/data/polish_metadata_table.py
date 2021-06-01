@@ -34,6 +34,6 @@ def run():
         new_metadata = new_metadata.append(phylum_df)
     
     new_metadata['MAG_no'] = new_metadata['Genome Name / Sample Name'].str.split('SB-').str[1]
-    new_metadata['shortname'] = new_metadata['MAG_no'] + ' ' + new_metadata['NAG_no']
+    new_metadata['shortname'] = new_metadata['Phylum'] + ' ' + new_metadata['MAG_no']
 
     new_metadata.to_csv(Path(data_dir / 'processed' / 'metadata.tsv'), sep='\t')
