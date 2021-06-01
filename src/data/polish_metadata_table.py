@@ -6,7 +6,7 @@ def run():
     # polish the metadata table with small changes to the annotations
     # and reordering according to a combination of alphabetic order and phylogeny
     
-    metadata = pd.read_table(data_dir / 'imgjgi-sb-mags-metadata.xls').iloc[: , :-1]
+    metadata = pd.read_table(data_dir / 'raw' / 'imgjgi-sb-mags-metadata.xls').iloc[: , :-1]
     
     meta_temp = metadata.copy()
 
